@@ -2,133 +2,196 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>SabiStock - Chinedu's Shop</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
 *{font-family:'Inter',sans-serif;box-sizing:border-box;margin:0;padding:0}
-body{background:#F5F0EB;padding-bottom:90px}
-.header{background:#FF6F00;border-radius:0 0 28px 28px;padding:22px 20px 24px;color:white;display:flex;justify-content:space-between;align-items:center}
-.header h1{font-size:28px;font-weight:800;letter-spacing:-0.5px;display:flex;align-items:center;gap:8px}
-.header p{font-size:12px;opacity:0.95;margin-top:2px}
-.avatar{width:40px;height:40px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px}
-.sales-card{background:#FFE9CC;border:1.5px solid #FF8C2A;border-radius:18px;padding:18px 20px;margin:18px 16px}
-.sales-card small{font-size:14px;color:#333}
-.sales-card h2{font-size:38px;font-weight:800;margin:4px 0;letter-spacing:-1px}
-.sales-card .growth{color:#E05A00;font-size:13px;font-weight:600}
-.section{padding:0 20px;margin-top:18px}
-.section h2{font-size:22px;font-weight:800}
-.section p{font-size:13px;color:#666;margin-top:2px}
-.product-card{background:white;border-radius:16px;padding:14px;margin:14px 0;display:flex;align-items:center;gap:14px;box-shadow:0 4px 12px rgba(0,0,0,0.06)}
-.prod-img{width:62px;height:62px;object-fit:contain;background:#FFF7F0;border-radius:10px}
-.badge{padding:5px 14px;border-radius:20px;font-size:12px;font-weight:800;color:white;float:right}
-.badge.LOW{background:#E53935}
-.badge.GOOD{background:#2E9E4B}
-.badge.MONITOR{background:#F2B705;color:#5A3D00}
-.status-pill{font-size:12px;padding:6px 12px;border-radius:20px;display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-weight:600}
-.status-pill.red{background:#FFE2E2;color:#B00020}
-.status-pill.green{background:#E2F5E6;color:#0A6B2E}
-.status-pill.yellow{background:#FFF0C2;color:#7A5A00}
-.prod-info{flex:1}
-.prod-info b{font-size:17px}
-.prod-info small{font-size:13px;color:#666}
-.send-btn{background:#00C853;color:white;border:none;width:calc(100% - 32px);margin:18px 16px;padding:18px;border-radius:18px;font-size:22px;font-weight:800;display:flex;justify-content:center;align-items:center;gap:10px;box-shadow:0 8px 20px rgba(0,200,83,0.3)}
-.send-btn:active{transform:scale(0.98)}
-.hint{font-size:12px;color:#777;text-align:center;margin-top:-10px}
-.bottom-nav{position:fixed;bottom:12px;left:12px;right:12px;background:white;border-radius:24px;display:flex;justify-content:space-around;padding:14px 8px;box-shadow:0 8px 24px rgba(0,0,0,0.15)}
-.bottom-nav div{text-align:center;font-size:11px;color:#999}
-.bottom-nav .active{color:#FF6F00;font-weight:700}
-input,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0}
+body{background:#F5F0EB;padding-bottom:100px}
+.header{background:#FF6F00;border-radius:0 0 28px 28px;padding:20px 20px;color:white;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+.header h1{font-size:26px;font-weight:800;display:flex;gap:8px;align-items:center}
+.header p{font-size:11px;opacity:.9}
+.avatar{width:38px;height:38px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.card-white{background:white;border-radius:18px;padding:16px;margin:14px 16px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.sales-card{background:#FFE9CC;border:1.5px solid #FF8C2A;border-radius:18px;padding:18px 20px;margin:16px}
+.sales-card h2{font-size:36px;font-weight:800}
+.badge{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:800;color:white}
+.LOW{background:#E53935}.GOOD{background:#2E9E4B}.MONITOR{background:#FFB800;color:#333}
+.product-row{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #eee}
+.prod-img{width:56px;height:56px;background:#FFF3E0;border-radius:10px;object-fit:contain}
+.pill{font-size:11px;padding:5px 10px;border-radius:20px;font-weight:600;display:inline-block;margin-top:4px}
+.pill.red{background:#FFE2E2;color:#B00020}.pill.green{background:#E2F5E6;color:#0A6B2E}.pill.yellow{background:#FFF0C2;color:#7A5A00}
+.btn{border:none;padding:14px;border-radius:12px;width:100%;font-weight:800;margin-top:10px}
+.btn-orange{background:#FF6F00;color:white}.btn-black{background:#111;color:white}.btn-green{background:#00C853;color:white;font-size:18px;display:flex;gap:8px;justify-content:center;align-items:center}
+input{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:5px 0}
+.tab{display:none}.tab.active{display:block}
+.bottom-nav{position:fixed;bottom:12px;left:12px;right:12px;background:white;border-radius:24px;display:flex;justify-content:space-around;padding:12px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.nav-item{text-align:center;font-size:11px;color:#999;cursor:pointer}
+.nav-item.active{color:#FF6F00;font-weight:800}
+.pro-card{background:linear-gradient(135deg,#111,#333);color:white;border-radius:18px;padding:20px}
 </style>
 </head>
 <body>
 
 <div class="header">
-<div><h1><span style="background:white;color:#FF6F00;border-radius:8px;padding:2px 6px">✓</span> SabiStock</h1><p>WhatsApp Inventory Alert • <span id="shopName">Chinedu's Shop</span></p></div>
+<div><h1><span style="background:white;color:#FF6F00;border-radius:6px;padding:1px 6px">✓</span> SabiStock</h1><p>WhatsApp Inventory Alert • <span id="shopName">Chinedu's Shop</span></p></div>
 <div class="avatar">👨🏾‍💼</div>
 </div>
 
+<!-- DASHBOARD TAB -->
+<div id="dashboard" class="tab active">
 <div class="sales-card">
 <small>Today's Sales</small>
 <h2>₦<span id="sales">75,000</span></h2>
-<div class="growth">💰 +12.5% from yesterday • <span id="date"></span></div>
+<small style="color:#E05A00;font-weight:600">💰 +12.5% from yesterday • <span id="dateNow"></span></small>
+</div>
+<div style="padding:0 20px"><h3>Inventory Status</h3><small><span id="totalP">3</span> products • <span id="lowP" style="color:red;font-weight:700">1 low stock alert</span></small></div>
+<div class="card-white" id="dashList"></div>
+<button class="btn btn-green" style="width:calc(100% - 32px);margin:16px" onclick="sendWhatsApp()"> 
+<svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.55 4.106 1.51 5.832L0 24l6.335-1.663A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+Send Alert</button>
+<p style="text-align:center;font-size:11px;color:#888">Tap to send inventory alert to Oga via WhatsApp</p>
 </div>
 
-<div class="section">
-<h2>Inventory Status</h2>
-<p><span id="totalP">3</span> products being tracked • <span id="lowP" style="color:#E53935;font-weight:700">1 low stock alert</span></p>
+<!-- PRODUCTS TAB -->
+<div id="products" class="tab">
+<div style="padding:16px 20px"><h2>Products</h2><small>Manage your shop inventory</small></div>
+<div class="card-white">
+<h4>Add New Product</h4>
+<input id="pname" placeholder="e.g. Indomie Onion">
+<input id="pqty" type="number" placeholder="Quantity e.g. 50">
+<input id="plow" type="number" placeholder="Low alert at e.g. 10">
+<input id="pprice" type="number" placeholder="Price per carton e.g. 4500">
+<button class="btn btn-black" onclick="addProduct()">+ Add Product</button>
+</div>
+<div class="card-white" id="prodListFull"></div>
 </div>
 
-<div class="section">
-<h2>Products</h2>
-<div id="productList"></div>
+<!-- ALERTS TAB -->
+<div id="alerts" class="tab">
+<div style="padding:16px 20px"><h2>Alerts History</h2><small>All low stock alerts sent</small></div>
+<div class="card-white" id="alertHistory"><p>No alerts yet. Sell products to trigger low stock.</p></div>
+<div class="card-white">
+<h4>Restock Needed Now</h4>
+<div id="restockList"></div>
+</div>
 </div>
 
-<button class="send-btn" onclick="sendWhatsApp()">
-<svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.55 4.106 1.51 5.832L0 24l6.335-1.663A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm5.894 17.086c-.24.674-1.416 1.246-1.97 1.326-.474.069-1.054.099-1.703-.108-.489-.156-1.12-.36-1.92-.705-3.376-1.445-5.567-4.82-5.735-5.045-.168-.224-1.374-1.827-1.374-3.485 0-1.658.87-2.47 1.179-2.81.309-.34.674-.425.898-.425.225 0 .45.002.647.012.208.01.486-.078.759.577.275.66.935 2.285 1.018 2.45.082.165.137.357.027.576-.11.22-.165.357-.33.55-.165.193-.346.403-.494.543-.165.156-.336.326-.144.64.192.313.853 1.408 1.83 2.28 1.258 1.123 2.32 1.47 2.65 1.634.33.165.522.138.714-.082.192-.22.824-.96.1044-1.28.22-.32.358-.533.447-.755.089-.22.044-.412-.022-.576z"/></svg>
-Send Alert
-</button>
-<p class="hint">Tap to send inventory alert to Oga via WhatsApp</p>
+<!-- PROFILE TAB -->
+<div id="profile" class="tab">
+<div style="padding:16px 20px"><h2>Profile</h2></div>
+<div class="card-white">
+<p>Shop Name</p>
+<input id="shopInput" value="Chinedu's Shop" oninput="updateShop()">
+<p style="margin-top:10px">Owner WhatsApp (for alerts)</p>
+<input id="ownerPhone" placeholder="e.g. 08012345678">
+</div>
 
-<div class="section" style="margin-top:26px">
-<h2>Add / Sell Product</h2>
-<input id="pname" placeholder="Product e.g. Indomie">
-<input id="pqty" type="number" placeholder="Qty e.g. 50">
-<input id="plow" type="number" placeholder="Low alert at e.g. 5">
-<button onclick="addProduct()" style="background:#111;color:white;border:none;padding:12px;border-radius:10px;width:100%;font-weight:700;margin-top:8px">+ Add Product</button>
+<div class="card-white pro-card" id="proCard">
+<h3>⭐ SabiStock Pro</h3>
+<p style="font-size:13px;margin:8px 0;opacity:.9">Unlock unlimited products, auto daily WhatsApp reports, sales PDF, and remove watermark.</p>
+<p style="font-size:12px">Free: 3 products max • Pro: Unlimited</p>
+<h2 style="margin:12px 0">₦2,000 / month</h2>
+<button class="btn" style="background:#FF6F00;color:white" onclick="payWithPaystack()">🔓 Unlock Pro with Paystack</button>
+<button class="btn" style="background:white;color:black;margin-top:8px" onclick="window.open('https://paystack.com/buy/sabistock-pro','_blank')">Pay via Payment Link</button>
+<small style="display:block;margin-top:8px;opacity:.6">Secure payment by Paystack. Works in Nigeria, Ghana, Kenya, worldwide cards.</small>
+</div>
+
+<div class="card-white">
+<h4>Today Summary</h4>
+<p>Total Products: <b id="sumProd">3</b></p>
+<p>Total Sales Today: <b>₦<span id="sumSales">75,000</span></b></p>
+<p>Low Stock: <b id="sumLow">1</b></p>
+<button class="btn btn-black" onclick="resetAll()">Reset Shop (Clear All)</button>
+</div>
 </div>
 
 <div class="bottom-nav">
-<div class="active">🏠<br>Dashboard</div>
-<div>📦<br>Products</div>
-<div>🔔<br>Alerts</div>
-<div>👤<br>Profile</div>
+<div class="nav-item active" onclick="showTab('dashboard',this)">🏠<br>Dashboard</div>
+<div class="nav-item" onclick="showTab('products',this)">📦<br>Products</div>
+<div class="nav-item" onclick="showTab('alerts',this)">🔔<br>Alerts</div>
+<div class="nav-item" onclick="showTab('profile',this)">👤<br>Profile</div>
 </div>
 
 <script>
-let products = JSON.parse(localStorage.getItem('sabi_v2') || '[{"name":"Indomie","qty":5,"low":10,"status":"LOW","img":"indomie"},{"name":"Peak Milk","qty":25,"low":10,"status":"GOOD","img":"peak"},{"name":"Bournvita","qty":8,"low":10,"status":"MONITOR","img":"bournvita"}]');
-let sales = parseInt(localStorage.getItem('sales_v2') || '75000');
+let products = JSON.parse(localStorage.getItem('sabi_final') || '[{"name":"Indomie","qty":5,"low":10,"price":3500,"img":"indomie"},{"name":"Peak Milk","qty":25,"low":10,"price":12000,"img":"peak"},{"name":"Bournvita","qty":8,"low":10,"price":8000,"img":"bournvita"}]');
+let sales = parseInt(localStorage.getItem('sales_final') || '75000');
+let isPro = localStorage.getItem('isPro')==='true';
+let alerts = JSON.parse(localStorage.getItem('alerts')||'[]');
 
+function showTab(name,el){
+ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+ document.getElementById(name).classList.add('active');
+ document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+ el.classList.add('active');
+ window.scrollTo(0,0);
+}
 function render(){
- let list = document.getElementById('productList');
- let html = '';
- let lowCount = 0;
+ let dashHtml=''; let prodHtml=''; let restockHtml=''; let lowCount=0;
  products.forEach((p,i)=>{
-   if(p.qty <= p.low) lowCount++;
-   let badgeClass = p.qty <= p.low ? 'LOW' : (p.qty <= p.low+3 ? 'MONITOR' : 'GOOD');
-   let badgeText = badgeClass;
-   let pillClass = badgeClass==='LOW'?'red':badgeClass==='GOOD'?'green':'yellow';
-   let pillIcon = badgeClass==='LOW'?'!':'✓';
-   if(badgeClass==='MONITOR') pillIcon='⚠';
-   let pillText = badgeClass==='LOW'?'Restock needed':badgeClass==='GOOD'?'Healthy':'Monitor stock';
-   let subText = badgeClass==='LOW'?`${p.qty} cartons • Low stock - Red alert`:badgeClass==='GOOD'?`${p.qty} cartons • In stock`:`${p.qty} cartons • Low`;
-   let imgSrc = p.img==='indomie'?'https://i.ibb.co/3m1p3X2/indomie.png':p.img==='peak'?'https://i.ibb.co/3yQ7L8L/peakmilk.png':'https://i.ibb.co/FbG9Q3s/bournvita.png';
-   // fallback emoji if img fails
-   html += `<div class="product-card">
-   <img class="prod-img" src="${imgSrc}" onerror="this.style.display='none'">
-   <div class="prod-info"><div style="display:flex;justify-content:space-between"><b>${p.name}</b><span class="badge ${badgeClass}">${badgeText}</span></div><small style="color:${badgeClass==='LOW'?'#E53935':badgeClass==='GOOD'?'#2E9E4B':'#C28B00'}">${subText}</small><br><span class="status-pill ${pillClass}">${pillIcon} ${pillText}</span><div style="margin-top:8px"><button onclick="sell(${i})" style="background:black;color:white;border:none;padding:6px 14px;border-radius:8px;font-size:12px">Sell 1</button> <button onclick="removeP(${i})" style="background:#eee;border:none;padding:6px 10px;border-radius:8px;font-size:12px">Delete</button></div></div></div>`;
+   if(p.qty<=p.low) lowCount++;
+   let badge=p.qty<=p.low?'LOW':p.qty<=p.low+3?'MONITOR':'GOOD';
+   let pillClass=badge==='LOW'?'red':badge==='GOOD'?'green':'yellow';
+   let pillText=badge==='LOW'?'Restock needed':badge==='GOOD'?'Healthy':'Monitor stock';
+   let sub=`${p.qty} cartons • ${badge==='LOW'?'Low stock - Red alert':badge==='GOOD'?'In stock':'Low'}`;
+   let color=badge==='LOW'?'#E53935':badge==='GOOD'?'#2E9E4B':'#C28B00';
+   let row=`<div class="product-row"><img class="prod-img" src="https://via.placeholder.com/56/FFF3E0/FF6F00?text=${p.name[0]}"><div style="flex:1"><div style="display:flex;justify-content:space-between"><b>${p.name}</b><span class="badge ${badge}">${badge}</span></div><small style="color:${color}">${sub}</small><br><span class="pill ${pillClass}">${pillText}</span><div style="margin-top:6px"><button onclick="sell(${i})" style="background:#111;color:white;border:none;padding:5px 12px;border-radius:6px;font-size:11px">Sell 1</button> <button onclick="addQty(${i})" style="background:#eee;border:none;padding:5px 10px;border-radius:6px;font-size:11px">+5</button> <button onclick="delP(${i})" style="background:none;border:none;color:#999;font-size:11px">Delete</button></div></div></div>`;
+   dashHtml+=row; prodHtml+=row;
+   if(p.qty<=p.low) restockHtml+=`<div style="padding:8px 0;border-bottom:1px solid #eee"><b>${p.name}</b> - ${p.qty} left <span style="float:right;color:red">Order now</span></div>`;
  });
- list.innerHTML = html;
- document.getElementById('totalP').innerText = products.length;
- document.getElementById('lowP').innerText = lowCount + ' low stock alert';
- document.getElementById('sales').innerText = sales.toLocaleString();
- document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
- localStorage.setItem('sabi_v2', JSON.stringify(products));
- localStorage.setItem('sales_v2', sales);
+ document.getElementById('dashList').innerHTML=dashHtml;
+ document.getElementById('prodListFull').innerHTML=prodHtml||'<p>No products</p>';
+ document.getElementById('restockList').innerHTML=restockHtml||'<p>All good ✅</p>';
+ document.getElementById('totalP').innerText=products.length;
+ document.getElementById('lowP').innerText=lowCount+' low stock alert';
+ document.getElementById('sales').innerText=sales.toLocaleString();
+ document.getElementById('sumProd').innerText=products.length;
+ document.getElementById('sumSales').innerText=sales.toLocaleString();
+ document.getElementById('sumLow').innerText=lowCount;
+ document.getElementById('dateNow').innerText=new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+ document.getElementById('alertHistory').innerHTML=alerts.length?alerts.map(a=>`<div style="padding:8px 0;border-bottom:1px solid #eee"><small>${a.time}</small><br>${a.msg}</div>`).join(''):'<p>No alerts yet</p>';
+ if(isPro){document.getElementById('proCard').innerHTML='<h3>✅ Pro Active</h3><p>Unlimited products unlocked. Thank you Oga!</p>';}
+ localStorage.setItem('sabi_final',JSON.stringify(products));
+ localStorage.setItem('sales_final',sales);
 }
 function addProduct(){
- let n=document.getElementById('pname').value;let q=parseInt(document.getElementById('pqty').value);let l=parseInt(document.getElementById('plow').value)||5;
- if(!n||isNaN(q)) return alert('Enter product and qty');products.push({name:n,qty:q,low:l,status:'GOOD',img:'other'});render();
- document.getElementById('pname').value='';document.getElementById('pqty').value='';document.getElementById('plow').value='';
+ let n=document.getElementById('pname').value;let q=parseInt(document.getElementById('pqty').value);let l=parseInt(document.getElementById('plow').value)||5;let pr=parseInt(document.getElementById('pprice').value)||0;
+ if(!isPro && products.length>=3) return alert('Free plan: 3 products max. Unlock Pro for ₦2000 in Profile tab to add more.');
+ if(!n||isNaN(q)) return alert('Enter name and qty');
+ products.push({name:n,qty:q,low:l,price:pr,img:'other'});render();
+ document.getElementById('pname').value='';document.getElementById('pqty').value='';document.getElementById('plow').value='';document.getElementById('pprice').value='';
+ showTab('dashboard',document.querySelectorAll('.nav-item')[0]);
 }
-function sell(i){products[i].qty--;sales+=1200;render();}
-function removeP(i){products.splice(i,1);render();}
+function sell(i){products[i].qty--;sales+=products[i].price||1200;if(products[i].qty<=products[i].low){alerts.unshift({time:new Date().toLocaleString(),msg:`⚠️ ${products[i].name} low: ${products[i].qty} left`});localStorage.setItem('alerts',JSON.stringify(alerts));}render();}
+function addQty(i){products[i].qty+=5;render();}
+function delP(i){if(confirm('Delete?')){products.splice(i,1);render();}}
+function updateShop(){document.getElementById('shopName').innerText=document.getElementById('shopInput').value;}
 function sendWhatsApp(){
- let low = products.filter(p=>p.qty<=p.low).map(p=>`⚠️ ${p.name}: ${p.qty} cartons left (Order now!)`).join('%0A');
- if(!low) low='✅ All products OK - No low stock';
- let msg=`*SabiStock - ${document.getElementById('shopName').innerText}*%0A%0A${low}%0A%0A💰 Sales Today: ₦${sales.toLocaleString()}%0A📦 Total Products: ${products.length}%0A%0A_Sent from SabiStock_`;
- window.open(`https://wa.me/?text=${msg}`,'_blank');
+ let low=products.filter(p=>p.qty<=p.low).map(p=>`⚠️ ${p.name}: ${p.qty} left`).join('%0A');
+ if(!low) low='✅ All stock OK';
+ let msg=`*SabiStock - ${document.getElementById('shopName').innerText}*%0A%0A${low}%0A%0A💰 Sales: ₦${sales.toLocaleString()}%0A📦 Products: ${products.length}%0A%0A_Sent from SabiStock ${isPro?'Pro':''}_`;
+ let phone=document.getElementById('ownerPhone').value.replace(/\D/g,'');
+ let url=phone?`https://wa.me/234${phone.slice(-10)}?text=${msg}`:`https://wa.me/?text=${msg}`;
+ window.open(url,'_blank');
+ alerts.unshift({time:new Date().toLocaleString(),msg:low});localStorage.setItem('alerts',JSON.stringify(alerts));render();
 }
+function payWithPaystack(){
+ let handler=PaystackPop.setup({
+  key:'pk_test_xxxxxxxxxxxxxxxxxxxx', // REPLACE WITH YOUR PAYSTACK PUBLIC KEY FROM paystack.com
+  email:'customer@example.com',
+  amount:200000, // ₦2000 = 2000*100
+  currency:'NGN',
+  ref:''+Math.floor(Math.random()*1000000000+1),
+  onClose:function(){alert('Payment window closed');},
+  callback:function(response){
+   alert('Payment success! Ref: '+response.reference);
+   localStorage.setItem('isPro','true');isPro=true;render();
+  }
+ });
+ handler.openIframe();
+}
+function resetAll(){if(confirm('Clear shop?')){localStorage.clear();location.reload();}}
 render();
 </script>
 </body>
