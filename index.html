@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html><head><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SabiStock - Shop Inventory Alert</title>
+<style>body{background:#FFF8E1;color:#222;font-family:sans-serif;padding:16px}
+.header{background:#FF6F00;color:white;padding:20px;border-radius:16px;text-align:center}
+.card{background:white;border:1px solid #FFE0B2;border-radius:12px;padding:16px;margin:10px 0;box-shadow:0 2px 8px #0001}
+.btn{background:#FF6F00;color:white;padding:14px;border:none;border-radius:10px;width:100%;font-weight:bold;margin-top:8px}
+.low{background:#FFEBEE;border-left:5px solid red}
+.ok{background:#E8F5E9;border-left:5px solid green}
+input{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;margin:4px 0}
+</style></head><body>
+<div class="header"><h1 style="margin:0">SabiStock</h1><p style="margin:0">Your Shop Sabi Everything</p></div>
+
+<div class="card"><b>Today Sales:</b> ₦<span id="sales">0</span> <span style="float:right">Products: <span id="count">0</span></span></div>
+
+<div id="list"></div>
+
+<button class="btn" style="background:#25D366" onclick="sendWhatsApp()">📲 Send Low Stock Alert via WhatsApp</button>
+
+<hr>
+<h3>Add Product</h3>
+<input id="pname" placeholder="Product Name e.g. Indomie Onion 70g">
+<input id="pqty" type="number" placeholder="Quantity e.g. 50">
+<input id="plow" type="number" placeholder="Low Stock Alert at e.g. 10">
+<button class="btn" onclick="addP()">+ Add to Shop</button>
+
+<button class="btn" style="background:black;margin-top:20px" onclick="window.open('https://paystack.com/buy/sabistock','_blank')">Unlock Pro - ₦2000/mo - Unlimited Products</button>
+
+<script>
+let products=JSON.parse(localStorage.getItem('sabistock')||'[]');
+let sales=parseInt(localStorage.getItem('sales')||'0');
+function render(){
+ let h=''; let lowCount=0;
+ products.forEach((p,i)=>{
+   let cls=p.qty<=p.low?'low':'ok';
+   if(p.qty<=p.low) lowCount++;
+   h+=`<div class="card ${cls}"><b>${p.name}</b> <span style="float:right">${p.qty} left</span><br><small>Alert if below ${p.low}</small><br>
+   <button onclick="sell(${i})" style="padding:6px 12px;margin-top:8px;background:black;color:white;border-radius:6px;border:none">Sell 1</button>
+   <button onclick="delP(${i})" style="padding:6px 12px;background:#ccc;border:none;border-radius:6px">Delete</button></div>`;
+ });
+ document.getElementById('list').innerHTML=h||'<p>No product yet. Add Indomie, Milk etc</p>';
+ document.getElementById('count').innerText=products.length;
+ document.getElementById('sales').innerText=sales;
+ localStorage.setItem('sabistock',JSON.stringify(products));
+ localStorage.setItem('sales',sales);
+}
+function addP(){
+ let n=document.getElementById('pname').value;let q=parseInt(document.getElementById('pqty').value);let l=parseInt(document.getElementById('plow').value);
+ if(!n||isNaN(q))return alert('Add name and qty');products.push({name:n,qty:q,low:l||5});render();
+ document.getElementById('pname').value='';document.getElementById('pqty').value='';document.getElementById('plow').value='';
+}
+function sell(i){products[i].qty--;sales+=500;render();}
+function delP(i){products.splice(i,1);render();}
+function sendWhatsApp(){
+ let low=products.filter(p=>p.qty<=p.low).map(p=>`⚠️ ${p.name}: ${p.qty} left (Alert: ${p.low})`).join('%0A');
+ if(!low) low='All stock OK today ✅';
+ let msg=`*SabiStock Alert - ${new Date().toLocaleDateString()}*%0A%0A${low}%0A%0ATotal Sales Today: ₦${sales}%0A%0A- Sent from SabiStock`;
+ window.open(`https://wa.me/?text=${msg}`,'_blank');
+}
+render();
+</script></body></html>
