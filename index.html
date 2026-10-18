@@ -1,61 +1,135 @@
 <!DOCTYPE html>
-<html><head><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SabiStock - Shop Inventory Alert</title>
-<style>body{background:#FFF8E1;color:#222;font-family:sans-serif;padding:16px}
-.header{background:#FF6F00;color:white;padding:20px;border-radius:16px;text-align:center}
-.card{background:white;border:1px solid #FFE0B2;border-radius:12px;padding:16px;margin:10px 0;box-shadow:0 2px 8px #0001}
-.btn{background:#FF6F00;color:white;padding:14px;border:none;border-radius:10px;width:100%;font-weight:bold;margin-top:8px}
-.low{background:#FFEBEE;border-left:5px solid red}
-.ok{background:#E8F5E9;border-left:5px solid green}
-input{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;margin:4px 0}
-</style></head><body>
-<div class="header"><h1 style="margin:0">SabiStock</h1><p style="margin:0">Your Shop Sabi Everything</p></div>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>SabiStock - Chinedu's Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+*{font-family:'Inter',sans-serif;box-sizing:border-box;margin:0;padding:0}
+body{background:#F5F0EB;padding-bottom:90px}
+.header{background:#FF6F00;border-radius:0 0 28px 28px;padding:22px 20px 24px;color:white;display:flex;justify-content:space-between;align-items:center}
+.header h1{font-size:28px;font-weight:800;letter-spacing:-0.5px;display:flex;align-items:center;gap:8px}
+.header p{font-size:12px;opacity:0.95;margin-top:2px}
+.avatar{width:40px;height:40px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px}
+.sales-card{background:#FFE9CC;border:1.5px solid #FF8C2A;border-radius:18px;padding:18px 20px;margin:18px 16px}
+.sales-card small{font-size:14px;color:#333}
+.sales-card h2{font-size:38px;font-weight:800;margin:4px 0;letter-spacing:-1px}
+.sales-card .growth{color:#E05A00;font-size:13px;font-weight:600}
+.section{padding:0 20px;margin-top:18px}
+.section h2{font-size:22px;font-weight:800}
+.section p{font-size:13px;color:#666;margin-top:2px}
+.product-card{background:white;border-radius:16px;padding:14px;margin:14px 0;display:flex;align-items:center;gap:14px;box-shadow:0 4px 12px rgba(0,0,0,0.06)}
+.prod-img{width:62px;height:62px;object-fit:contain;background:#FFF7F0;border-radius:10px}
+.badge{padding:5px 14px;border-radius:20px;font-size:12px;font-weight:800;color:white;float:right}
+.badge.LOW{background:#E53935}
+.badge.GOOD{background:#2E9E4B}
+.badge.MONITOR{background:#F2B705;color:#5A3D00}
+.status-pill{font-size:12px;padding:6px 12px;border-radius:20px;display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-weight:600}
+.status-pill.red{background:#FFE2E2;color:#B00020}
+.status-pill.green{background:#E2F5E6;color:#0A6B2E}
+.status-pill.yellow{background:#FFF0C2;color:#7A5A00}
+.prod-info{flex:1}
+.prod-info b{font-size:17px}
+.prod-info small{font-size:13px;color:#666}
+.send-btn{background:#00C853;color:white;border:none;width:calc(100% - 32px);margin:18px 16px;padding:18px;border-radius:18px;font-size:22px;font-weight:800;display:flex;justify-content:center;align-items:center;gap:10px;box-shadow:0 8px 20px rgba(0,200,83,0.3)}
+.send-btn:active{transform:scale(0.98)}
+.hint{font-size:12px;color:#777;text-align:center;margin-top:-10px}
+.bottom-nav{position:fixed;bottom:12px;left:12px;right:12px;background:white;border-radius:24px;display:flex;justify-content:space-around;padding:14px 8px;box-shadow:0 8px 24px rgba(0,0,0,0.15)}
+.bottom-nav div{text-align:center;font-size:11px;color:#999}
+.bottom-nav .active{color:#FF6F00;font-weight:700}
+input,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0}
+</style>
+</head>
+<body>
 
-<div class="card"><b>Today Sales:</b> ₦<span id="sales">0</span> <span style="float:right">Products: <span id="count">0</span></span></div>
+<div class="header">
+<div><h1><span style="background:white;color:#FF6F00;border-radius:8px;padding:2px 6px">✓</span> SabiStock</h1><p>WhatsApp Inventory Alert • <span id="shopName">Chinedu's Shop</span></p></div>
+<div class="avatar">👨🏾‍💼</div>
+</div>
 
-<div id="list"></div>
+<div class="sales-card">
+<small>Today's Sales</small>
+<h2>₦<span id="sales">75,000</span></h2>
+<div class="growth">💰 +12.5% from yesterday • <span id="date"></span></div>
+</div>
 
-<button class="btn" style="background:#25D366" onclick="sendWhatsApp()">📲 Send Low Stock Alert via WhatsApp</button>
+<div class="section">
+<h2>Inventory Status</h2>
+<p><span id="totalP">3</span> products being tracked • <span id="lowP" style="color:#E53935;font-weight:700">1 low stock alert</span></p>
+</div>
 
-<hr>
-<h3>Add Product</h3>
-<input id="pname" placeholder="Product Name e.g. Indomie Onion 70g">
-<input id="pqty" type="number" placeholder="Quantity e.g. 50">
-<input id="plow" type="number" placeholder="Low Stock Alert at e.g. 10">
-<button class="btn" onclick="addP()">+ Add to Shop</button>
+<div class="section">
+<h2>Products</h2>
+<div id="productList"></div>
+</div>
 
-<button class="btn" style="background:black;margin-top:20px" onclick="window.open('https://paystack.com/buy/sabistock','_blank')">Unlock Pro - ₦2000/mo - Unlimited Products</button>
+<button class="send-btn" onclick="sendWhatsApp()">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.55 4.106 1.51 5.832L0 24l6.335-1.663A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm5.894 17.086c-.24.674-1.416 1.246-1.97 1.326-.474.069-1.054.099-1.703-.108-.489-.156-1.12-.36-1.92-.705-3.376-1.445-5.567-4.82-5.735-5.045-.168-.224-1.374-1.827-1.374-3.485 0-1.658.87-2.47 1.179-2.81.309-.34.674-.425.898-.425.225 0 .45.002.647.012.208.01.486-.078.759.577.275.66.935 2.285 1.018 2.45.082.165.137.357.027.576-.11.22-.165.357-.33.55-.165.193-.346.403-.494.543-.165.156-.336.326-.144.64.192.313.853 1.408 1.83 2.28 1.258 1.123 2.32 1.47 2.65 1.634.33.165.522.138.714-.082.192-.22.824-.96.1044-1.28.22-.32.358-.533.447-.755.089-.22.044-.412-.022-.576z"/></svg>
+Send Alert
+</button>
+<p class="hint">Tap to send inventory alert to Oga via WhatsApp</p>
+
+<div class="section" style="margin-top:26px">
+<h2>Add / Sell Product</h2>
+<input id="pname" placeholder="Product e.g. Indomie">
+<input id="pqty" type="number" placeholder="Qty e.g. 50">
+<input id="plow" type="number" placeholder="Low alert at e.g. 5">
+<button onclick="addProduct()" style="background:#111;color:white;border:none;padding:12px;border-radius:10px;width:100%;font-weight:700;margin-top:8px">+ Add Product</button>
+</div>
+
+<div class="bottom-nav">
+<div class="active">🏠<br>Dashboard</div>
+<div>📦<br>Products</div>
+<div>🔔<br>Alerts</div>
+<div>👤<br>Profile</div>
+</div>
 
 <script>
-let products=JSON.parse(localStorage.getItem('sabistock')||'[]');
-let sales=parseInt(localStorage.getItem('sales')||'0');
+let products = JSON.parse(localStorage.getItem('sabi_v2') || '[{"name":"Indomie","qty":5,"low":10,"status":"LOW","img":"indomie"},{"name":"Peak Milk","qty":25,"low":10,"status":"GOOD","img":"peak"},{"name":"Bournvita","qty":8,"low":10,"status":"MONITOR","img":"bournvita"}]');
+let sales = parseInt(localStorage.getItem('sales_v2') || '75000');
+
 function render(){
- let h=''; let lowCount=0;
+ let list = document.getElementById('productList');
+ let html = '';
+ let lowCount = 0;
  products.forEach((p,i)=>{
-   let cls=p.qty<=p.low?'low':'ok';
-   if(p.qty<=p.low) lowCount++;
-   h+=`<div class="card ${cls}"><b>${p.name}</b> <span style="float:right">${p.qty} left</span><br><small>Alert if below ${p.low}</small><br>
-   <button onclick="sell(${i})" style="padding:6px 12px;margin-top:8px;background:black;color:white;border-radius:6px;border:none">Sell 1</button>
-   <button onclick="delP(${i})" style="padding:6px 12px;background:#ccc;border:none;border-radius:6px">Delete</button></div>`;
+   if(p.qty <= p.low) lowCount++;
+   let badgeClass = p.qty <= p.low ? 'LOW' : (p.qty <= p.low+3 ? 'MONITOR' : 'GOOD');
+   let badgeText = badgeClass;
+   let pillClass = badgeClass==='LOW'?'red':badgeClass==='GOOD'?'green':'yellow';
+   let pillIcon = badgeClass==='LOW'?'!':'✓';
+   if(badgeClass==='MONITOR') pillIcon='⚠';
+   let pillText = badgeClass==='LOW'?'Restock needed':badgeClass==='GOOD'?'Healthy':'Monitor stock';
+   let subText = badgeClass==='LOW'?`${p.qty} cartons • Low stock - Red alert`:badgeClass==='GOOD'?`${p.qty} cartons • In stock`:`${p.qty} cartons • Low`;
+   let imgSrc = p.img==='indomie'?'https://i.ibb.co/3m1p3X2/indomie.png':p.img==='peak'?'https://i.ibb.co/3yQ7L8L/peakmilk.png':'https://i.ibb.co/FbG9Q3s/bournvita.png';
+   // fallback emoji if img fails
+   html += `<div class="product-card">
+   <img class="prod-img" src="${imgSrc}" onerror="this.style.display='none'">
+   <div class="prod-info"><div style="display:flex;justify-content:space-between"><b>${p.name}</b><span class="badge ${badgeClass}">${badgeText}</span></div><small style="color:${badgeClass==='LOW'?'#E53935':badgeClass==='GOOD'?'#2E9E4B':'#C28B00'}">${subText}</small><br><span class="status-pill ${pillClass}">${pillIcon} ${pillText}</span><div style="margin-top:8px"><button onclick="sell(${i})" style="background:black;color:white;border:none;padding:6px 14px;border-radius:8px;font-size:12px">Sell 1</button> <button onclick="removeP(${i})" style="background:#eee;border:none;padding:6px 10px;border-radius:8px;font-size:12px">Delete</button></div></div></div>`;
  });
- document.getElementById('list').innerHTML=h||'<p>No product yet. Add Indomie, Milk etc</p>';
- document.getElementById('count').innerText=products.length;
- document.getElementById('sales').innerText=sales;
- localStorage.setItem('sabistock',JSON.stringify(products));
- localStorage.setItem('sales',sales);
+ list.innerHTML = html;
+ document.getElementById('totalP').innerText = products.length;
+ document.getElementById('lowP').innerText = lowCount + ' low stock alert';
+ document.getElementById('sales').innerText = sales.toLocaleString();
+ document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+ localStorage.setItem('sabi_v2', JSON.stringify(products));
+ localStorage.setItem('sales_v2', sales);
 }
-function addP(){
- let n=document.getElementById('pname').value;let q=parseInt(document.getElementById('pqty').value);let l=parseInt(document.getElementById('plow').value);
- if(!n||isNaN(q))return alert('Add name and qty');products.push({name:n,qty:q,low:l||5});render();
+function addProduct(){
+ let n=document.getElementById('pname').value;let q=parseInt(document.getElementById('pqty').value);let l=parseInt(document.getElementById('plow').value)||5;
+ if(!n||isNaN(q)) return alert('Enter product and qty');products.push({name:n,qty:q,low:l,status:'GOOD',img:'other'});render();
  document.getElementById('pname').value='';document.getElementById('pqty').value='';document.getElementById('plow').value='';
 }
-function sell(i){products[i].qty--;sales+=500;render();}
-function delP(i){products.splice(i,1);render();}
+function sell(i){products[i].qty--;sales+=1200;render();}
+function removeP(i){products.splice(i,1);render();}
 function sendWhatsApp(){
- let low=products.filter(p=>p.qty<=p.low).map(p=>`⚠️ ${p.name}: ${p.qty} left (Alert: ${p.low})`).join('%0A');
- if(!low) low='All stock OK today ✅';
- let msg=`*SabiStock Alert - ${new Date().toLocaleDateString()}*%0A%0A${low}%0A%0ATotal Sales Today: ₦${sales}%0A%0A- Sent from SabiStock`;
+ let low = products.filter(p=>p.qty<=p.low).map(p=>`⚠️ ${p.name}: ${p.qty} cartons left (Order now!)`).join('%0A');
+ if(!low) low='✅ All products OK - No low stock';
+ let msg=`*SabiStock - ${document.getElementById('shopName').innerText}*%0A%0A${low}%0A%0A💰 Sales Today: ₦${sales.toLocaleString()}%0A📦 Total Products: ${products.length}%0A%0A_Sent from SabiStock_`;
  window.open(`https://wa.me/?text=${msg}`,'_blank');
 }
 render();
-</script></body></html>
+</script>
+</body>
+</html>
